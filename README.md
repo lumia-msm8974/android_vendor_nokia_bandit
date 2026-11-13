@@ -38,6 +38,22 @@ generic one from `msm8974-common` is used; the Windows registry has no
 separate copy), MAC addresses, EFS/modem data. Per-device data is never
 committed here.
 
+## Camera (`proprietary/vendor/{bin,lib,firmware}`, committed)
+
+Same files as the Lumia 930 vendor tree (the two phones share the camera
+modules):
+
+- the 2014 mm-camera2 stack of the OnePlus One (`mm-qcamera-daemon`, the
+  `libmmcamera2_*` modules, C2D/CPP/JPEG libraries, `cpp_firmware_v1_2_0.fw`,
+  the DW9714 AF tuning libraries), from TheMuppets' `proprietary_vendor_oneplus`
+  (bacon, lineage-18.1); only `libmmcamera2_sensor_modules.so` is changed, with
+  its sensor list renamed to `karma` (rear) and `skyphd` (front);
+- `libchromatix_karma_*.so` and `libchromatix_skyphd_*.so`: the rear and front
+  module tuning (colour matrices, white balance references, colour shading);
+- `lumia-ois-104541NN.bin`: firmware, init and mode blocks of the rear focus /
+  OIS controller for each Karma module revision; the kernel loads the one of
+  the module it reads.
+
 ## Generic MSM8974 blobs
 
 Adreno, QMI/RIL, location and the other common blobs come from TheMuppets
@@ -48,7 +64,8 @@ out.
 ## Credits
 
 - [TheMuppets](https://github.com/TheMuppets) — `proprietary_vendor_oppo`
-  (generic MSM8974 blobs).
+  (generic MSM8974 blobs) and `proprietary_vendor_oneplus` (bacon camera stack).
+- OnePlus and OPPO — the OnePlus One / Find 7 camera stack.
 - [LineageOS](https://github.com/LineageOS) — `android_device_oppo_msm8974-common`
   (layout of the blob lists, Wi-Fi/audio configuration).
 - [KorelisLabs/lumia-1520-mainline](https://github.com/KorelisLabs/lumia-1520-mainline)

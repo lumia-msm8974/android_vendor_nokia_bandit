@@ -36,6 +36,20 @@ PRODUCT_COPY_FILES += \
 
 # Generic MSM8974 blobs. Venus (video codec) firmware of the OnePlus One is
 # dropped: the 1520 uses its own qcvss8974 image (venus.* above).
+# Camera (committed, same files as the Lumia 930 vendor tree): the 2014
+# mm-camera2 daemon and modules of the OnePlus One (TheMuppets'
+# proprietary_vendor_oneplus, bacon) with the sensor list renamed to
+# karma/skyphd, the Karma and Skype_HD module tuning (libchromatix_karma_*,
+# libchromatix_skyphd_*) and the rear focus/OIS firmware of every Karma
+# module revision (lumia-ois-<module>.bin, picked by the kernel).
+BANDIT_CAMERA_PATH := vendor/nokia/bandit/proprietary
+PRODUCT_COPY_FILES += \
+    $(foreach f,$(wildcard $(BANDIT_CAMERA_PATH)/vendor/lib/*.so \
+        $(BANDIT_CAMERA_PATH)/vendor/bin/mm-qcamera-daemon \
+        $(BANDIT_CAMERA_PATH)/vendor/firmware/cpp_firmware_*.fw \
+        $(BANDIT_CAMERA_PATH)/vendor/firmware/lumia-ois-*.bin), \
+        $(f):$(TARGET_COPY_OUT_VENDOR)/$(patsubst $(BANDIT_CAMERA_PATH)/vendor/%,%,$(f)))
+
 include vendor/oppo/msm8974-common/msm8974-common-vendor.mk
 
 BANDIT_OPPO_FW := vendor/oppo/msm8974-common/proprietary/vendor/firmware
